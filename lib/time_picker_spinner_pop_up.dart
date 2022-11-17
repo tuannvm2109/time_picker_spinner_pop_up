@@ -43,7 +43,8 @@ class TimePickerSpinnerPopUp extends StatefulWidget {
   _TimePickerSpinnerPopUpState createState() => _TimePickerSpinnerPopUpState();
 }
 
-class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp> with SingleTickerProviderStateMixin {
+class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
+    with SingleTickerProviderStateMixin {
   RenderBox? _childBox;
   OverlayEntry? _overlayEntry;
   TimePickerSpinnerController? _controller;
@@ -71,7 +72,8 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp> with Si
     });
 
     _colorTween = Tween(begin: 0, end: 1);
-    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 150));
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 150));
     _animation = _colorTween.animate(_animationController);
   }
 
@@ -109,16 +111,21 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp> with Si
 
     switch (widget.mode) {
       case CupertinoDatePickerMode.time:
-        time = DateFormat(widget.timeFormat ?? 'HH:mm').format(_selectedDateTime);
+        time =
+            DateFormat(widget.timeFormat ?? 'HH:mm').format(_selectedDateTime);
         iconAssets = 'packages/time_picker_spinner_pop_up/assets/ic_clock.png';
         break;
       case CupertinoDatePickerMode.date:
-        time = DateFormat(widget.timeFormat ?? 'dd/MM/yyyy').format(_selectedDateTime);
-        iconAssets = 'packages/time_picker_spinner_pop_up/assets/ic_calendar.png';
+        time = DateFormat(widget.timeFormat ?? 'dd/MM/yyyy')
+            .format(_selectedDateTime);
+        iconAssets =
+            'packages/time_picker_spinner_pop_up/assets/ic_calendar.png';
         break;
       case CupertinoDatePickerMode.dateAndTime:
-        time = DateFormat(widget.timeFormat ?? 'dd/MM/yyyy HH:mm').format(_selectedDateTime);
-        iconAssets = 'packages/time_picker_spinner_pop_up/assets/ic_calendar.png';
+        time = DateFormat(widget.timeFormat ?? 'dd/MM/yyyy HH:mm')
+            .format(_selectedDateTime);
+        iconAssets =
+            'packages/time_picker_spinner_pop_up/assets/ic_calendar.png';
         break;
     }
 
@@ -310,8 +317,11 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp> with Si
 
             final centerHorizontal = offset.dx + (size.width) / 2;
 
-            double left = centerHorizontal - (((size.width) / 2 + _paddingHorizontal) * value);
-            double right = screenWidth - (centerHorizontal + (((size.width) / 2 + _paddingHorizontal) * value));
+            double left = centerHorizontal -
+                (((size.width) / 2 + _paddingHorizontal) * value);
+            double right = screenWidth -
+                (centerHorizontal +
+                    (((size.width) / 2 + _paddingHorizontal) * value));
             double? top = offset.dy - ((220 / 2) * value);
             double? bottom;
 
