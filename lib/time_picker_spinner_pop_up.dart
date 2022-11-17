@@ -174,6 +174,22 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp> with Si
         final size = _childBox!.size;
         final offset = _childBox!.localToGlobal(const Offset(0, 0));
 
+        if (widget.paddingHorizontal != null) {
+          _paddingHorizontal = widget.paddingHorizontal!;
+        } else {
+          switch (widget.mode) {
+            case CupertinoDatePickerMode.time:
+              _paddingHorizontal = 20;
+              break;
+            case CupertinoDatePickerMode.date:
+              _paddingHorizontal = 50;
+              break;
+            case CupertinoDatePickerMode.dateAndTime:
+              _paddingHorizontal = 20;
+              break;
+          }
+        }
+
         Widget menu = Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -187,9 +203,9 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp> with Si
               )
             ],
           ),
-          constraints: const BoxConstraints(
-            minWidth: 150,
-          ),
+          // constraints: const BoxConstraints(
+          //   minWidth: 150,
+          // ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -205,15 +221,23 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp> with Si
                       color: Color(0xFF1A1C1E),
                     )),
                   ),
-                  child: CupertinoDatePicker(
-                    minimumDate: widget.minTime,
-                    maximumDate: widget.maxTime,
-                    initialDateTime: _selectedDateTimeSpinner,
-                    use24hFormat: true,
-                    mode: widget.mode,
-                    onDateTimeChanged: (dateTime) {
-                      _selectedDateTimeSpinner = dateTime;
-                    },
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: size.width + 2 * _paddingHorizontal,
+                      ),
+                      child: CupertinoDatePicker(
+                        minimumDate: widget.minTime,
+                        maximumDate: widget.maxTime,
+                        initialDateTime: _selectedDateTimeSpinner,
+                        use24hFormat: true,
+                        mode: widget.mode,
+                        onDateTimeChanged: (dateTime) {
+                          _selectedDateTimeSpinner = dateTime;
+                        },
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -280,28 +304,15 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp> with Si
           ),
         );
 
-        if (widget.paddingHorizontal != null) {
-          _paddingHorizontal = widget.paddingHorizontal!;
-        } else {
-          switch (widget.mode) {
-            case CupertinoDatePickerMode.time:
-              _paddingHorizontal = 20;
-              break;
-            case CupertinoDatePickerMode.date:
-              _paddingHorizontal = 50;
-              break;
-            case CupertinoDatePickerMode.dateAndTime:
-              _paddingHorizontal = 20;
-              break;
-          }
-        }
         Widget menuWithPositioned = AnimatedBuilder(
           animation: _animation,
           builder: (BuildContext context, Widget? child) {
             final value = _animation.value ?? 0;
 
-            double left = offset.dx - _paddingHorizontal;
-            double right = screenWidth - (offset.dx + size.width + _paddingHorizontal);
+            final centerHorizontal = offset.dx + (size.width) / 2;
+
+            double left = centerHorizontal - (((size.width) / 2 + _paddingHorizontal) * value);
+            double right = screenWidth - (centerHorizontal + (((size.width) / 2 + _paddingHorizontal) * value));
             double? top = offset.dy - ((220 / 2) * value);
             double? bottom;
 

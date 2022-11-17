@@ -13,7 +13,6 @@ enum PositionType {
   overlap,
 }
 
-
 enum TimePickerSpinnerLayoutId {
   timePicker,
   buttonCancel,

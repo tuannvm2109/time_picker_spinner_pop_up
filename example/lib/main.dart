@@ -37,28 +37,35 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: TimePickerSpinnerPopUp(
-          mode: CupertinoDatePickerMode.time,
-          initTime: DateTime.now(),
-          minTime: DateTime.now().subtract(const Duration(days: 10)),
-          maxTime: DateTime.now().add(const Duration(days: 10)),
-          barrierColor: Colors.black12, //Barrier Color when pop up show
-          onChange: (dateTime) {
-            // Implement your logic with select dateTime
-          },
-          // Customize your time widget
-          // timeWidgetBuilder: (dateTime) {},
+      body: Stack(
+        children: [
+          Positioned(
+            left: 30,
+            top: 60,
+            child: TimePickerSpinnerPopUp(
+              mode: CupertinoDatePickerMode.date,
+              initTime: DateTime.now(),
+              minTime: DateTime.now().subtract(const Duration(days: 10)),
+              maxTime: DateTime.now().add(const Duration(days: 10)),
+              barrierColor: Colors.black12, //Barrier Color when pop up show
+              onChange: (dateTime) {
+                // Implement your logic with select dateTime
+              },
+              // Customize your time widget
+              // timeWidgetBuilder: (dateTime) {},
 
-          // Customize your time format
-          // timeFormat: 'dd/MM/yyyy',
+              // Customize your time format
+              // timeFormat: 'dd/MM/yyyy',
 
-          // Customize your time format
-          // timeFormat: 'dd/MM/yyyy',
-        ),
+              // Customize your time format
+              // timeFormat: 'dd/MM/yyyy',
+            ),
+          ),
+        ],
       ),
     );
   }

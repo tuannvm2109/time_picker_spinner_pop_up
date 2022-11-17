@@ -26,4 +26,3 @@ class TimePickerSpinnerController extends ChangeNotifier {
     isUpdate = false;
   }
 }
-
