@@ -151,32 +151,36 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
           _controller?.showMenu();
         }
       },
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: const Color(0xFFB3B5B7), width: 0.5),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Image.asset(
-              iconAssets,
-              height: 18,
-              width: 18,
-              color: const Color(0xFF676B6E),
-            ),
-            const SizedBox(width: 8),
-            Text(
-              time,
-              style: const TextStyle(
-                fontSize: 14,
-                fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.w400,
-                color: Color(0xFF1A1C1E),
+      child: Theme(
+        data: Theme.of(context),
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+                color: Theme.of(context).colorScheme.onSurface, width: 0.5),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset(
+                iconAssets,
+                height: 18,
+                width: 18,
+                color: Theme.of(context).iconTheme.color,
               ),
-            ),
-          ],
+              const SizedBox(width: 8),
+              Text(
+                time,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w400,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -210,7 +214,7 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
         Widget menu = Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             boxShadow: [
               BoxShadow(
                 color: const Color(0xFF000000).withOpacity(0.08),
@@ -229,13 +233,13 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
               SizedBox(
                 height: 225,
                 child: CupertinoTheme(
-                  data: const CupertinoThemeData(
+                  data: CupertinoThemeData(
                     textTheme: CupertinoTextThemeData(
                         dateTimePickerTextStyle: TextStyle(
                       fontSize: 16,
+                      color: Theme.of(context).colorScheme.onSurface,
                       fontStyle: FontStyle.normal,
                       fontWeight: FontWeight.w500,
-                      color: Color(0xFF1A1C1E),
                     )),
                   ),
                   child: SingleChildScrollView(
@@ -250,6 +254,7 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
                         initialDateTime: _selectedDateTimeSpinner,
                         use24hFormat: true,
                         mode: widget.mode,
+                        backgroundColor: Theme.of(context).colorScheme.surface,
                         onDateTimeChanged: (dateTime) {
                           _selectedDateTimeSpinner = dateTime;
                         },
@@ -278,13 +283,13 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
                           _hideMenu();
                         });
                       },
-                      child: const Text(
+                      child: Text(
                         'OK',
                         style: TextStyle(
                           fontSize: 14,
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.w400,
-                          color: Color(0xFF1A1C1E),
+                          color: Theme.of(context).textTheme.bodyMedium?.color,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -299,13 +304,14 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
                             _hideMenu();
                           });
                         },
-                        child: const Text(
+                        child: Text(
                           'Cancel',
                           style: TextStyle(
                             fontSize: 14,
                             fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.w400,
-                            color: Color(0xFF1A1C1E),
+                            color:
+                                Theme.of(context).textTheme.bodyMedium?.color,
                           ),
                           textAlign: TextAlign.center,
                         ),
