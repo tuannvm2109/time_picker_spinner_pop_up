@@ -1,13 +1,13 @@
 library time_picker_spinner_pop_up;
 
 import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-part 'time_picker_spinner_enum.dart';
-
 part 'time_picker_spinner_controller.dart';
+part 'time_picker_spinner_enum.dart';
 
 class TimePickerSpinnerPopUp extends StatefulWidget {
   const TimePickerSpinnerPopUp({
@@ -103,7 +103,18 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
 
   Widget _timeWidget() {
     if (widget.timeWidgetBuilder != null) {
-      return widget.timeWidgetBuilder!.call(_selectedDateTime);
+      return InkWell(
+          onTap: () {
+            if (widget.pressType == PressType.singlePress) {
+              _controller?.showMenu();
+            }
+          },
+          onLongPress: () {
+            if (widget.pressType == PressType.longPress) {
+              _controller?.showMenu();
+            }
+          },
+          child: widget.timeWidgetBuilder!.call(_selectedDateTime));
     }
 
     late String time;
@@ -377,7 +388,7 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
       },
     );
     if (_overlayEntry != null) {
-      Overlay.of(context)!.insert(_overlayEntry!);
+      Overlay.of(context).insert(_overlayEntry!);
       _animationController.forward();
     }
   }
