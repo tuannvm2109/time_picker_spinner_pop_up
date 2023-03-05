@@ -82,15 +82,7 @@ packages:
       sha256: "910f85bce16fb5c6f614e117efa303e85a1731bb0081edf3604a2ae6e9a3cc91"
       url: "https://pub.dev"
     source: hosted
-    version: "0.17.0"
-  js:
-    dependency: transitive
-    description:
-      name: js
-      sha256: "323b7c70073cccf6b9b8d8b334be418a3293cfb612a560dc2737160a37bf61bd"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.6.6"
+    version: "0.18.0"
   lints:
     dependency: transitive
     description:
