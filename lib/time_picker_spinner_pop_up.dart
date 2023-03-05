@@ -394,7 +394,7 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
       },
     );
     if (_overlayEntry != null) {
-      Overlay.of(context).insert(_overlayEntry!);
+      Overlay.of(context)!.insert(_overlayEntry!);
       _animationController.forward();
     }
   }
