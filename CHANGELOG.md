@@ -1,3 +1,7 @@
+## [1.0.4]
+
+* Update intl version
+
 ## [1.0.3]
 
 * Format code
