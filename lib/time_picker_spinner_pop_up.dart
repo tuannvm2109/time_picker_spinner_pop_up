@@ -21,8 +21,14 @@ class TimePickerSpinnerPopUp extends StatefulWidget {
     this.maxTime,
     this.mode = CupertinoDatePickerMode.time,
     this.timeFormat,
-    this.paddingHorizontal,
+    this.paddingHorizontalOverlay,
     this.timeWidgetBuilder,
+    this.minuteInterval = 1,
+    this.textStyle,
+    this.iconSize = 18,
+    this.padding = const EdgeInsets.fromLTRB(12, 10, 12, 10),
+    this.cancelText = 'Cancel',
+    this.confirmText = 'OK',
   }) : super(key: key);
 
   final PressType pressType;
@@ -37,7 +43,13 @@ class TimePickerSpinnerPopUp extends StatefulWidget {
   final DateTime? minTime;
   final DateTime? maxTime;
   final String? timeFormat;
-  final double? paddingHorizontal;
+  final double? paddingHorizontalOverlay;
+  final int minuteInterval;
+  final TextStyle? textStyle;
+  final double iconSize;
+  final EdgeInsetsGeometry? padding;
+  final String cancelText;
+  final String confirmText;
 
   @override
   _TimePickerSpinnerPopUpState createState() => _TimePickerSpinnerPopUpState();
@@ -159,25 +171,26 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
                 color: Theme.of(context).colorScheme.onSurface, width: 0.5),
             borderRadius: BorderRadius.circular(10),
           ),
-          padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+          padding: widget.padding,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Image.asset(
                 iconAssets,
-                height: 18,
-                width: 18,
+                height: widget.iconSize,
+                width: widget.iconSize,
                 color: Theme.of(context).iconTheme.color,
               ),
               const SizedBox(width: 8),
               Text(
                 time,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.w400,
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
+                style: widget.textStyle ??
+                    TextStyle(
+                      fontSize: 14,
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w400,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
               ),
             ],
           ),
@@ -195,8 +208,8 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
         final size = _childBox!.size;
         final offset = _childBox!.localToGlobal(const Offset(0, 0));
 
-        if (widget.paddingHorizontal != null) {
-          _paddingHorizontal = widget.paddingHorizontal!;
+        if (widget.paddingHorizontalOverlay != null) {
+          _paddingHorizontal = widget.paddingHorizontalOverlay!;
         } else {
           switch (widget.mode) {
             case CupertinoDatePickerMode.time:
@@ -251,6 +264,7 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
                       child: CupertinoDatePicker(
                         minimumDate: widget.minTime,
                         maximumDate: widget.maxTime,
+                        minuteInterval: widget.minuteInterval,
                         initialDateTime: _selectedDateTimeSpinner,
                         use24hFormat: true,
                         mode: widget.mode,
@@ -284,7 +298,7 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
                         });
                       },
                       child: Text(
-                        'OK',
+                        widget.confirmText,
                         style: TextStyle(
                           fontSize: 14,
                           fontStyle: FontStyle.normal,
@@ -305,7 +319,7 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
                           });
                         },
                         child: Text(
-                          'Cancel',
+                          widget.cancelText,
                           style: TextStyle(
                             fontSize: 14,
                             fontStyle: FontStyle.normal,

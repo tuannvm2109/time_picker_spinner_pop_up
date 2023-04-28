@@ -51,17 +51,17 @@ class _MyHomePageState extends State<MyHomePage> {
               minTime: DateTime.now().subtract(const Duration(days: 10)),
               maxTime: DateTime.now().add(const Duration(days: 10)),
               barrierColor: Colors.black12, //Barrier Color when pop up show
+              minuteInterval: 1,
+              padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+              cancelText: 'Cancel',
+              confirmText: 'OK',
+              pressType: PressType.singlePress,
+              timeFormat: 'dd/MM/yyyy',
+              // Customize your time widget
+              // timeWidgetBuilder: (dateTime) {},
               onChange: (dateTime) {
                 // Implement your logic with select dateTime
               },
-              // Customize your time widget
-              // timeWidgetBuilder: (dateTime) {},
-
-              // Customize your time format
-              // timeFormat: 'dd/MM/yyyy',
-
-              // Customize your time format
-              // timeFormat: 'dd/MM/yyyy',
             ),
           ),
         ],

@@ -1,3 +1,9 @@
+## [1.1.0]
+
+* Add `minuteInterval`, `textStyle`, `iconSize`, `padding`, `cancelText`, `confirmText`
+* Change `paddingHorizontal` to `paddingHorizontalOverlay`
+* Update `README.md`
+
 ## [1.0.4]
 
 * Update intl version
