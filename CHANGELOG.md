@@ -1,3 +1,9 @@
+## [1.2.0]
+
+* Add document comment
+* Add `isCancelTextLeft`
+* Fix bug select time before minTime
+
 ## [1.1.0]
 
 * Add `minuteInterval`, `textStyle`, `iconSize`, `padding`, `cancelText`, `confirmText`

@@ -29,27 +29,66 @@ class TimePickerSpinnerPopUp extends StatefulWidget {
     this.padding = const EdgeInsets.fromLTRB(12, 10, 12, 10),
     this.cancelText = 'Cancel',
     this.confirmText = 'OK',
+    this.isCancelTextLeft = false,
   }) : super(key: key);
 
+  /// Type of press to show pop up, default is [PressType.singlePress]
   final PressType pressType;
+
+  /// Barrier color when pop up show
   final Color barrierColor;
+
+  /// Controller for time picker spinner
   final TimePickerSpinnerController? controller;
+
+  /// A callback will call after user select DateTime
   final void Function(DateTime)? onChange;
 
+  /// The mode of the date picker as one of [CupertinoDatePickerMode].
+  /// Defaults to [CupertinoDatePickerMode.time]. Cannot be null and
+  /// value cannot change after initial build.
   final CupertinoDatePickerMode mode;
 
+  /// Custom builder for time widget
   final Widget Function(DateTime)? timeWidgetBuilder;
+
+  /// The initial date and/or time of the picker
   final DateTime? initTime;
+
+  /// The minTime selectable date that the picker can settle on.
   final DateTime? minTime;
+
+  /// The maximum selectable date that the picker can settle on.
   final DateTime? maxTime;
+
+  /// Time widget 's text style
   final String? timeFormat;
+
+  /// Popup 's padding container
   final double? paddingHorizontalOverlay;
+
+  /// The granularity of the minutes spinner, if it is shown in the current mode.
+  /// Must be an integer factor of 60.
   final int minuteInterval;
+
+  /// Time widget 's text style
   final TextStyle? textStyle;
+
+  /// Time widget 's icon clock size
   final double iconSize;
+
+  /// Time widget 's padding container
   final EdgeInsetsGeometry? padding;
+
+  /// Text for cancel button, default is 'Cancel'
   final String cancelText;
+
+  /// Text for confirm button, default is 'OK'
   final String confirmText;
+
+  /// The position of [cancelText], default is right
+  /// If [isCancelTextLeft] is true, [cancelText] will be on left
+  final bool isCancelTextLeft;
 
   @override
   _TimePickerSpinnerPopUpState createState() => _TimePickerSpinnerPopUpState();
@@ -224,6 +263,55 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
           }
         }
 
+        final confirmButton = Expanded(
+            child: GestureDetector(
+          onTap: () {
+            _animationController.reverse();
+
+            setState(() {
+              _selectedDateTime = _selectedDateTimeSpinner;
+            });
+
+            Future.delayed(const Duration(milliseconds: 150), () {
+              widget.onChange?.call(_selectedDateTime);
+              _hideMenu();
+            });
+          },
+          child: Text(
+            widget.confirmText,
+            style: TextStyle(
+              fontSize: 14,
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w400,
+              color: Theme.of(context).textTheme.bodyMedium?.color,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ));
+
+        final cancelButton = Expanded(
+          child: GestureDetector(
+            onTap: () {
+              _animationController.reverse();
+
+              _selectedDateTimeSpinner = _selectedDateTime;
+              Future.delayed(const Duration(milliseconds: 150), () {
+                _hideMenu();
+              });
+            },
+            child: Text(
+              widget.cancelText,
+              style: TextStyle(
+                fontSize: 14,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w400,
+                color: Theme.of(context).textTheme.bodyMedium?.color,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+
         Widget menu = Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -237,9 +325,6 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
               )
             ],
           ),
-          // constraints: const BoxConstraints(
-          //   minWidth: 150,
-          // ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -270,7 +355,15 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
                         mode: widget.mode,
                         backgroundColor: Theme.of(context).colorScheme.surface,
                         onDateTimeChanged: (dateTime) {
-                          _selectedDateTimeSpinner = dateTime;
+                          if (widget.minTime != null &&
+                              dateTime.isBefore(widget.minTime!)) {
+                            _selectedDateTimeSpinner = widget.minTime!;
+                          } else if (widget.maxTime != null &&
+                              dateTime.isAfter(widget.maxTime!)) {
+                            _selectedDateTimeSpinner = widget.maxTime!;
+                          } else {
+                            _selectedDateTimeSpinner = dateTime;
+                          }
                         },
                       ),
                     ),
@@ -282,56 +375,15 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                        child: GestureDetector(
-                      onTap: () {
-                        _animationController.reverse();
-
-                        setState(() {
-                          _selectedDateTime = _selectedDateTimeSpinner;
-                        });
-
-                        Future.delayed(const Duration(milliseconds: 150), () {
-                          widget.onChange?.call(_selectedDateTime);
-                          _hideMenu();
-                        });
-                      },
-                      child: Text(
-                        widget.confirmText,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
-                          color: Theme.of(context).textTheme.bodyMedium?.color,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    )),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          _animationController.reverse();
-
-                          _selectedDateTimeSpinner = _selectedDateTime;
-                          Future.delayed(const Duration(milliseconds: 150), () {
-                            _hideMenu();
-                          });
-                        },
-                        child: Text(
-                          widget.cancelText,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w400,
-                            color:
-                                Theme.of(context).textTheme.bodyMedium?.color,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  ],
+                  children: widget.isCancelTextLeft
+                      ? [
+                          cancelButton,
+                          confirmButton,
+                        ]
+                      : [
+                          confirmButton,
+                          cancelButton,
+                        ],
                 ),
               ),
               const SizedBox(
