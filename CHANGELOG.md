@@ -1,3 +1,7 @@
+## [1.2.1]
+
+* Fix bug time not update when `didUpdateWidget`
+
 ## [1.2.0]
 
 * Add document comment

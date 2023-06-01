@@ -129,6 +129,13 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
   }
 
   @override
+  void didUpdateWidget(covariant TimePickerSpinnerPopUp oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _selectedDateTime = widget.initTime ?? DateTime.now();
+    _selectedDateTimeSpinner = widget.initTime ?? DateTime.now();
+  }
+
+  @override
   void dispose() {
     _hideMenu();
     _controller?.removeListener(_updateView);
