@@ -4,10 +4,10 @@ A beautiful and animated time picker spinner pop up.
 Here are some supported style:
 
 ###### Time picker
-![DEMO](https://github.com/tuannvm2109/time_picker_spinner_pop_up/blob/master/assets/time.gif)
+![DEMO](https://github.com/tuannvm2109/time_picker_spinner_pop_up/raw/master/assets/time.gif)
 
 ###### Date picker
-![DEMO](https://github.com/tuannvm2109/time_picker_spinner_pop_up/blob/master/assets/date.gif)
+![DEMO](https://github.com/tuannvm2109/time_picker_spinner_pop_up/raw/master/assets/date.gif)
 
 ## Usage
 

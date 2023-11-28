@@ -1,3 +1,7 @@
+## [1.2.2]
+
+* Fix broken gif image
+
 ## [1.2.1]
 
 * Fix bug time not update when `didUpdateWidget`

@@ -1,6 +1,6 @@
 name: time_picker_spinner_pop_up
 description: A package show popup anchor for pick date time by using spinner cupertino style
-version: 1.2.1
+version: 1.2.2
 homepage: https://github.com/tuannvm2109/time_picker_spinner_pop_up
 
 environment:
