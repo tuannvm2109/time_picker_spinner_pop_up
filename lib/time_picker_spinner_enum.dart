@@ -7,4 +7,7 @@ enum PressType {
 
   /// User single-presses on the time widget
   singlePress,
+
+  /// Disables automatic time popup on user presses.
+  disablePress,
 }
