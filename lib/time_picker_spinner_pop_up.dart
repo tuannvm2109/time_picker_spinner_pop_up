@@ -30,6 +30,8 @@ class TimePickerSpinnerPopUp extends StatefulWidget {
     this.cancelText = 'Cancel',
     this.confirmText = 'OK',
     this.isCancelTextLeft = false,
+    this.enable = true,
+    this.radius = 10,
   }) : super(key: key);
 
   /// Type of press to show pop up, default is [PressType.singlePress]
@@ -89,6 +91,12 @@ class TimePickerSpinnerPopUp extends StatefulWidget {
   /// The position of [cancelText], default is right
   /// If [isCancelTextLeft] is true, [cancelText] will be on left
   final bool isCancelTextLeft;
+
+  /// enable press to open the pop up or not, default is 'true'
+  final bool enable;
+
+  /// circular radius of the pop up, default is 10
+  final double radius;
 
   @override
   _TimePickerSpinnerPopUpState createState() => _TimePickerSpinnerPopUpState();
@@ -162,16 +170,20 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
   Widget _timeWidget() {
     if (widget.timeWidgetBuilder != null) {
       return InkWell(
-          onTap: () {
-            if (widget.pressType == PressType.singlePress) {
-              _controller?.showMenu();
-            }
-          },
-          onLongPress: () {
-            if (widget.pressType == PressType.longPress) {
-              _controller?.showMenu();
-            }
-          },
+          onTap: !widget.enable
+              ? null
+              : () {
+                  if (widget.pressType == PressType.singlePress) {
+                    _controller?.showMenu();
+                  }
+                },
+          onLongPress: !widget.enable
+              ? null
+              : () {
+                  if (widget.pressType == PressType.longPress) {
+                    _controller?.showMenu();
+                  }
+                },
           child: widget.timeWidgetBuilder!.call(_selectedDateTime));
     }
 
@@ -199,16 +211,20 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
     }
 
     return InkWell(
-      onTap: () {
-        if (widget.pressType == PressType.singlePress) {
-          _controller?.showMenu();
-        }
-      },
-      onLongPress: () {
-        if (widget.pressType == PressType.longPress) {
-          _controller?.showMenu();
-        }
-      },
+      onTap: !widget.enable
+          ? null
+          : () {
+              if (widget.pressType == PressType.singlePress) {
+                _controller?.showMenu();
+              }
+            },
+      onLongPress: !widget.enable
+          ? null
+          : () {
+              if (widget.pressType == PressType.longPress) {
+                _controller?.showMenu();
+              }
+            },
       child: Theme(
         data: Theme.of(context),
         child: Container(
@@ -265,7 +281,7 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
               _paddingHorizontal = 50;
               break;
             case CupertinoDatePickerMode.dateAndTime:
-              _paddingHorizontal = 20;
+              _paddingHorizontal = 50;
               break;
           }
         }
@@ -320,14 +336,16 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
         );
 
         Widget menu = Container(
+          margin: const EdgeInsets.all(10),
+          clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(widget.radius),
             color: Theme.of(context).colorScheme.surface,
             boxShadow: [
               BoxShadow(
                 color: const Color(0xFF000000).withOpacity(0.08),
                 spreadRadius: 0,
-                blurRadius: 16,
+                blurRadius: 8,
                 offset: const Offset(0, 2), // changes position of shadow
               )
             ],
@@ -436,13 +454,13 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
             }
 
             return Positioned(
-              left: left,
-              right: right,
-              top: top,
-              bottom: bottom,
+              left: left - 10,
+              right: right - 10,
+              top: top == null ? null : (top - 10),
+              bottom: bottom == null ? null : (bottom - 10),
               child: ConstrainedBox(
                   constraints: BoxConstraints(
-                    maxHeight: 250 * value,
+                    maxHeight: 270 * value,
                   ),
                   child: SingleChildScrollView(child: menu)),
             );

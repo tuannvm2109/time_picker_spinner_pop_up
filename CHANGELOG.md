@@ -1,3 +1,9 @@
+## [1.3.0]
+
+* Add `enable`, `radius`
+* Fix the bug where the pop-up radius is being cut off
+* Fix the bug where the shadow is being cut off
+
 ## [1.2.2]
 
 * Fix broken gif image

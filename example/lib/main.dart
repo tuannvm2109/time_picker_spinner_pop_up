@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
             left: 30,
             top: 60,
             child: TimePickerSpinnerPopUp(
-              mode: CupertinoDatePickerMode.date,
+              mode: CupertinoDatePickerMode.dateAndTime,
               initTime: DateTime.now(),
               minTime: DateTime.now().subtract(const Duration(days: 10)),
               maxTime: DateTime.now().add(const Duration(days: 10)),
@@ -55,6 +55,8 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
               cancelText: 'Cancel',
               confirmText: 'OK',
+              enable: true,
+              radius: 10,
               pressType: PressType.singlePress,
               timeFormat: 'dd/MM/yyyy',
               // Customize your time widget
