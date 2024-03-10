@@ -59,6 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
               radius: 10,
               pressType: PressType.singlePress,
               timeFormat: 'dd/MM/yyyy',
+              actionButtonPadding: EdgeInsetsDirectional.all(16.0),
               // Customize your time widget
               // timeWidgetBuilder: (dateTime) {},
               onChange: (dateTime) {

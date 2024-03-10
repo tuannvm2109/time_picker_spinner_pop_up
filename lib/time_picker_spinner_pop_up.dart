@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 part 'time_picker_spinner_controller.dart';
+
 part 'time_picker_spinner_enum.dart';
 
 class TimePickerSpinnerPopUp extends StatefulWidget {
@@ -32,6 +33,9 @@ class TimePickerSpinnerPopUp extends StatefulWidget {
     this.isCancelTextLeft = false,
     this.enable = true,
     this.radius = 10,
+    this.actionButtonPadding,
+    this.cancelTextStyle,
+    this.confirmTextStyle,
   }) : super(key: key);
 
   /// Type of press to show pop up, default is [PressType.singlePress]
@@ -66,6 +70,8 @@ class TimePickerSpinnerPopUp extends StatefulWidget {
   /// Time widget 's text style
   final String? timeFormat;
 
+  final EdgeInsetsDirectional? actionButtonPadding;
+
   /// Popup 's padding container
   final double? paddingHorizontalOverlay;
 
@@ -85,8 +91,12 @@ class TimePickerSpinnerPopUp extends StatefulWidget {
   /// Text for cancel button, default is 'Cancel'
   final String cancelText;
 
+  final TextStyle? cancelTextStyle;
+
   /// Text for confirm button, default is 'OK'
   final String confirmText;
+
+  final TextStyle? confirmTextStyle;
 
   /// The position of [cancelText], default is right
   /// If [isCancelTextLeft] is true, [cancelText] will be on left
@@ -300,15 +310,18 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
               _hideMenu();
             });
           },
-          child: Text(
-            widget.confirmText,
-            style: TextStyle(
-              fontSize: 14,
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.w400,
-              color: Theme.of(context).textTheme.bodyMedium?.color,
+          child: Padding(
+            padding: widget.actionButtonPadding ?? EdgeInsets.zero,
+            child: Text(
+              widget.confirmText,
+              style: widget.confirmTextStyle ?? TextStyle(
+                fontSize: 14,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w400,
+                color: Theme.of(context).textTheme.bodyMedium?.color,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
           ),
         ));
 
@@ -322,15 +335,18 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
                 _hideMenu();
               });
             },
-            child: Text(
-              widget.cancelText,
-              style: TextStyle(
-                fontSize: 14,
-                fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.w400,
-                color: Theme.of(context).textTheme.bodyMedium?.color,
+            child: Padding(
+              padding: widget.actionButtonPadding ?? EdgeInsets.zero,
+              child: Text(
+                widget.cancelText,
+                style: widget.cancelTextStyle ?? TextStyle(
+                  fontSize: 14,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w400,
+                  color: Theme.of(context).textTheme.bodyMedium?.color,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
           ),
         );
@@ -351,7 +367,6 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
             ],
           ),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(
                 height: 225,
@@ -411,9 +426,6 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
                         ],
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
             ],
           ),
         );
@@ -460,7 +472,7 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
               bottom: bottom == null ? null : (bottom - 10),
               child: ConstrainedBox(
                   constraints: BoxConstraints(
-                    maxHeight: 270 * value,
+                    maxHeight: 350 * value,
                   ),
                   child: SingleChildScrollView(child: menu)),
             );
