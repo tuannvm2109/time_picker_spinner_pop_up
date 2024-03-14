@@ -1,3 +1,7 @@
+## [1.4.0]
+
+* Add `use24hFormat`
+
 ## [1.3.0]
 
 * Add `enable`, `radius`

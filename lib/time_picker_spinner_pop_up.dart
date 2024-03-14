@@ -32,6 +32,7 @@ class TimePickerSpinnerPopUp extends StatefulWidget {
     this.isCancelTextLeft = false,
     this.enable = true,
     this.radius = 10,
+    this.use24hFormat = true,
   }) : super(key: key);
 
   /// Type of press to show pop up, default is [PressType.singlePress]
@@ -97,6 +98,9 @@ class TimePickerSpinnerPopUp extends StatefulWidget {
 
   /// circular radius of the pop up, default is 10
   final double radius;
+
+  /// Whether to use 24 hour format. Defaults to true.
+  final bool use24hFormat;
 
   @override
   _TimePickerSpinnerPopUpState createState() => _TimePickerSpinnerPopUpState();
@@ -376,7 +380,7 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
                         maximumDate: widget.maxTime,
                         minuteInterval: widget.minuteInterval,
                         initialDateTime: _selectedDateTimeSpinner,
-                        use24hFormat: true,
+                        use24hFormat: widget.use24hFormat,
                         mode: widget.mode,
                         backgroundColor: Theme.of(context).colorScheme.surface,
                         onDateTimeChanged: (dateTime) {
