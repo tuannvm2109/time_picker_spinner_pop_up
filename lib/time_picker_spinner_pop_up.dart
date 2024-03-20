@@ -25,6 +25,8 @@ class TimePickerSpinnerPopUp extends StatefulWidget {
     this.timeWidgetBuilder,
     this.minuteInterval = 1,
     this.textStyle,
+    this.cancelTextStyle,
+    this.confirmTextStyle,
     this.iconSize = 18,
     this.padding = const EdgeInsets.fromLTRB(12, 10, 12, 10),
     this.cancelText = 'Cancel',
@@ -76,6 +78,12 @@ class TimePickerSpinnerPopUp extends StatefulWidget {
 
   /// Time widget 's text style
   final TextStyle? textStyle;
+
+  /// Time widget cancelTextStyle's text style
+  final TextStyle? cancelTextStyle;
+
+  /// Time widget confirmTextStyle's text style
+  final TextStyle? confirmTextStyle;
 
   /// Time widget 's icon clock size
   final double iconSize;
@@ -306,12 +314,13 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
           },
           child: Text(
             widget.confirmText,
-            style: TextStyle(
-              fontSize: 14,
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.w400,
-              color: Theme.of(context).textTheme.bodyMedium?.color,
-            ),
+            style: widget.confirmTextStyle ??
+                TextStyle(
+                  fontSize: 14,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w400,
+                  color: Theme.of(context).textTheme.bodyMedium?.color,
+                ),
             textAlign: TextAlign.center,
           ),
         ));
@@ -328,12 +337,13 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
             },
             child: Text(
               widget.cancelText,
-              style: TextStyle(
-                fontSize: 14,
-                fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.w400,
-                color: Theme.of(context).textTheme.bodyMedium?.color,
-              ),
+              style: widget.cancelTextStyle ??
+                  TextStyle(
+                    fontSize: 14,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w400,
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
+                  ),
               textAlign: TextAlign.center,
             ),
           ),
