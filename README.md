@@ -47,6 +47,27 @@ Here are some supported style:
         )
 ```
 
+###### Locale:
+
+You can set custom locale with 
+
+```dart
+    locale: Locale('vi'),
+```
+
+But remember to add `localizationsDelegates` to your `MaterialApp`:
+
+```dart
+    MaterialApp(
+        localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+        ],
+        ...
+    )
+```
+
 ## License
 
 ```

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:time_picker_spinner_pop_up/time_picker_spinner_pop_up.dart';
 
 void main() {
@@ -18,6 +19,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           // primarySwatch: Colors.blue,
           ),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       home: const MyHomePage(title: 'Time Picker Spinner Pop Up'),
     );
   }
@@ -61,6 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
               timeFormat: 'dd/MM/yyyy',
               // Customize your time widget
               // timeWidgetBuilder: (dateTime) {},
+              locale: Locale('vi'),
               onChange: (dateTime) {
                 // Implement your logic with select dateTime
               },

@@ -1,3 +1,8 @@
+## [1.5.0]
+
+* Add `cancelTextStyle` `confirmTextStyle`
+* Add `locale` 
+
 ## [1.4.0]
 
 * Add `use24hFormat`

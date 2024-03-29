@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 part 'time_picker_spinner_controller.dart';
+
 part 'time_picker_spinner_enum.dart';
 
 class TimePickerSpinnerPopUp extends StatefulWidget {
@@ -35,6 +36,7 @@ class TimePickerSpinnerPopUp extends StatefulWidget {
     this.enable = true,
     this.radius = 10,
     this.use24hFormat = true,
+    this.locale,
   }) : super(key: key);
 
   /// Type of press to show pop up, default is [PressType.singlePress]
@@ -109,6 +111,18 @@ class TimePickerSpinnerPopUp extends StatefulWidget {
 
   /// Whether to use 24 hour format. Defaults to true.
   final bool use24hFormat;
+
+  /// Custom locale
+  /// if you want to use this locale, you must declare support localizationsDelegates in MaterialApp:
+  ///     MaterialApp(
+  ///       localizationsDelegates: const [
+  ///         GlobalMaterialLocalizations.delegate,
+  ///         GlobalWidgetsLocalizations.delegate,
+  ///         GlobalCupertinoLocalizations.delegate,
+  ///       ],
+  ///       ...
+  ///     )
+  final Locale? locale;
 
   @override
   _TimePickerSpinnerPopUpState createState() => _TimePickerSpinnerPopUpState();
@@ -432,6 +446,12 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
           ),
         );
 
+        Widget menuWithLocale = Localizations.override(
+          context: context,
+          locale: widget.locale,
+          child: menu,
+        );
+
         Widget menuWithPositioned = AnimatedBuilder(
           animation: _animation,
           builder: (BuildContext context, Widget? child) {
@@ -476,7 +496,8 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
                   constraints: BoxConstraints(
                     maxHeight: 270 * value,
                   ),
-                  child: SingleChildScrollView(child: menu)),
+                  child: SingleChildScrollView(
+                      child: widget.locale != null ? menuWithLocale : menu)),
             );
           },
         );
