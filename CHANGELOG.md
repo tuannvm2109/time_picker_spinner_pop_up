@@ -1,3 +1,8 @@
+## [2.0.0]
+
+* Upgrade flutter 3.19.6
+* Upgrade intl to 1.19.0
+
 ## [1.5.0]
 
 * Add `cancelTextStyle` `confirmTextStyle`

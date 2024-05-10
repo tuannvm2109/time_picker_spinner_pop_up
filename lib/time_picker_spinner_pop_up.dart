@@ -183,13 +183,20 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
     if (Platform.isIOS) {
       return child;
     } else {
-      return WillPopScope(
-        onWillPop: () {
+      return PopScope(
+        onPopInvoked: (pop) {
           _hideMenu();
-          return Future.value(true);
         },
         child: child,
       );
+      //
+      // return WillPopScope(
+      //   onWillPop: () {
+      //     _hideMenu();
+      //     return Future.value(true);
+      //   },
+      //   child: child,
+      // );
     }
   }
 
@@ -230,6 +237,12 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
         break;
       case CupertinoDatePickerMode.dateAndTime:
         time = DateFormat(widget.timeFormat ?? 'dd/MM/yyyy HH:mm')
+            .format(_selectedDateTime);
+        iconAssets =
+            'packages/time_picker_spinner_pop_up/assets/ic_calendar.png';
+        break;
+      case CupertinoDatePickerMode.monthYear:
+        time = DateFormat(widget.timeFormat ?? 'MM/yyyy')
             .format(_selectedDateTime);
         iconAssets =
             'packages/time_picker_spinner_pop_up/assets/ic_calendar.png';
@@ -307,6 +320,9 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
               _paddingHorizontal = 50;
               break;
             case CupertinoDatePickerMode.dateAndTime:
+              _paddingHorizontal = 50;
+              break;
+            case CupertinoDatePickerMode.monthYear:
               _paddingHorizontal = 50;
               break;
           }
@@ -520,7 +536,7 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
       },
     );
     if (_overlayEntry != null) {
-      Overlay.of(context)!.insert(_overlayEntry!);
+      Overlay.of(context).insert(_overlayEntry!);
       _animationController.forward();
     }
   }

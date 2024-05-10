@@ -52,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
             left: 30,
             top: 60,
             child: TimePickerSpinnerPopUp(
-              mode: CupertinoDatePickerMode.dateAndTime,
+              mode: CupertinoDatePickerMode.monthYear,
               initTime: DateTime.now(),
               minTime: DateTime.now().subtract(const Duration(days: 10)),
               maxTime: DateTime.now().add(const Duration(days: 10)),
@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
               timeFormat: 'dd/MM/yyyy',
               // Customize your time widget
               // timeWidgetBuilder: (dateTime) {},
-              locale: Locale('vi'),
+              locale: const Locale('vi'),
               onChange: (dateTime) {
                 // Implement your logic with select dateTime
               },
