@@ -6,6 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'cupertino_custom/cupertino_custom.dart';
+
 part 'time_picker_spinner_controller.dart';
 
 part 'time_picker_spinner_enum.dart';
@@ -37,6 +39,7 @@ class TimePickerSpinnerPopUp extends StatefulWidget {
     this.radius = 10,
     this.use24hFormat = true,
     this.locale,
+    this.isUseMinTime = false,
   }) : super(key: key);
 
   /// Type of press to show pop up, default is [PressType.singlePress]
@@ -123,6 +126,8 @@ class TimePickerSpinnerPopUp extends StatefulWidget {
   ///       ...
   ///     )
   final Locale? locale;
+
+  final bool isUseMinTime;
 
   @override
   _TimePickerSpinnerPopUpState createState() => _TimePickerSpinnerPopUpState();
@@ -351,7 +356,8 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
                   fontWeight: FontWeight.w400,
                   color: Theme.of(context).textTheme.bodyMedium?.color,
                 ),
-            textAlign: TextAlign.center,
+            textAlign:
+                widget.isCancelTextLeft ? TextAlign.right : TextAlign.left,
           ),
         ));
 
@@ -374,7 +380,8 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
                     fontWeight: FontWeight.w400,
                     color: Theme.of(context).textTheme.bodyMedium?.color,
                   ),
-              textAlign: TextAlign.center,
+              textAlign:
+                  widget.isCancelTextLeft ? TextAlign.right : TextAlign.left,
             ),
           ),
         );
@@ -415,13 +422,14 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
                       constraints: BoxConstraints(
                         maxWidth: size.width + 2 * _paddingHorizontal,
                       ),
-                      child: CupertinoDatePicker(
+                      child: CupertinoDatePickerCustom(
+                        isUseMinimumDate: widget.isUseMinTime,
                         minimumDate: widget.minTime,
                         maximumDate: widget.maxTime,
                         minuteInterval: widget.minuteInterval,
                         initialDateTime: _selectedDateTimeSpinner,
                         use24hFormat: widget.use24hFormat,
-                        mode: widget.mode,
+                        mode: _linkCupertinoMode(),
                         backgroundColor: Theme.of(context).colorScheme.surface,
                         onDateTimeChanged: (dateTime) {
                           if (widget.minTime != null &&
@@ -441,18 +449,21 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
               ),
               DefaultTextStyle(
                 style: const TextStyle(decoration: TextDecoration.none),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: widget.isCancelTextLeft
-                      ? [
-                          cancelButton,
-                          confirmButton,
-                        ]
-                      : [
-                          confirmButton,
-                          cancelButton,
-                        ],
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: widget.isCancelTextLeft
+                        ? [
+                            cancelButton,
+                            confirmButton,
+                          ]
+                        : [
+                            confirmButton,
+                            cancelButton,
+                          ],
+                  ),
                 ),
               ),
               const SizedBox(
@@ -554,6 +565,19 @@ class _TimePickerSpinnerPopUpState extends State<TimePickerSpinnerPopUp>
       _showMenu();
     } else {
       _hideMenu();
+    }
+  }
+
+  _linkCupertinoMode() {
+    switch (widget.mode) {
+      case CupertinoDatePickerMode.date:
+        return CupertinoDatePickerCustomMode.date;
+      case CupertinoDatePickerMode.time:
+        return CupertinoDatePickerCustomMode.time;
+      case CupertinoDatePickerMode.dateAndTime:
+        return CupertinoDatePickerCustomMode.dateAndTime;
+      default:
+        return CupertinoDatePickerCustomMode.monthYear;
     }
   }
 }
